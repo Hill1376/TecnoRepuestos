@@ -1,0 +1,34 @@
+# .github/workflows/ci.yml
+name: Pipeline de Integración Continua - TecnoRepuestos S.A.
+
+# Definición de eventos: El flujo se ejecutará automáticamente ante cualquier push o pull request en la rama main
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    # Entorno de ejecución: Una máquina virtual con la versión estable más reciente de Ubuntu Linux
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. DESCARGAR EL REPOSITORIO: Clona el código fuente actual del repositorio dentro de la máquina virtual
+    - name: Descargar el repositorio de código fuente
+      uses: actions/checkout@v4
+
+    # 2. CONFIGURAR EL ENTORNO DE NODE.JS: Prepara la versión v18 en el servidor virtual
+    - name: Configurar entorno de Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+        cache: 'npm' # Optimiza el tiempo de ejecución guardando en caché dependencias anteriores
+
+    # 3. INSTALAR LAS DEPENDENCIAS: Ejecuta el gestor de paquetes de forma limpia según el package.json
+    - name: Instalar árbol de dependencias oficiales
+      run: npm ci
+
+    # 4. EJECUTAR LAS PRUEBAS: Corre el comando que corregimos (jest) para certificar la lógica de negocio
+    - name: Ejecutar la suite de pruebas unitarias
+      run: npm test
