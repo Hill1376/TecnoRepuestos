@@ -1,0 +1,14 @@
+# Dependencias de Node.js (se descargan localmente y son muy pesadas)
+node_modules/
+
+# Variables de entorno y llaves secretas (contraseñas de la DB, tokens JWT)
+.env
+
+# Archivos de depuración y logs de errores
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos de configuración del sistema operativo
+.DS_Store
+Thumbs.db
